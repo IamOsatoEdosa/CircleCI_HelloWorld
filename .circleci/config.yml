@@ -13,7 +13,8 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: echo Hello
+          command: |
+             echo Hello
   print_world:
     docker:
       - image: circleci/node:13.8.0
@@ -23,7 +24,8 @@ jobs:
       - checkout
       - run:
           name: "Say world"
-          command: echo world
+          command: |
+             echo world
   print_my_name:
     docker:
       - image: cimg/base:2020.01
@@ -31,7 +33,8 @@ jobs:
       - checkout
       - run: 
           name: Print my env var 
-          command: echo $MY_NAME_VAR
+          command: |
+             echo $MY_NAME_VAR
 
 
 # Invoke jobs via workflows
