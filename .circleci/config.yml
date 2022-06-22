@@ -29,7 +29,9 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: echo $MY_NAME_VAR is the owner of this project we are viewing right now
+      - run: 
+          name: Print my env var 
+          command: echo $MY_NAME_VAR is the owner of this project we are viewing right now
 
 
 # Invoke jobs via workflows
