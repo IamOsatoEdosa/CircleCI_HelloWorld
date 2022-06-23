@@ -32,7 +32,7 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Print my env var 
+          name: "Print my env var name"
           command: |
              echo $MY_NAME_VAR
 
