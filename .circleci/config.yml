@@ -1,6 +1,16 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+commands:
+  print_pipeline_id:
+    description: prints the id of the pipeline
+    parameters:
+      to:
+        type: string
+    steps:
+      - checkout
+      - echo "<<parameter.to>>"
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -15,66 +25,69 @@ jobs:
           name: "Say hello"
           command: |
              echo Hello
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say world"
-          command: |
-             echo world
-  print_my_name:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - checkout
-      - run: 
-          name: "Print my env var name"
-          command: |
-             echo $MY_NAME_VAR
+      - print_pipeline_id:
+            to: $CIRCLE_WORKFLOW_ID
 
-  save_hello_world_output:
-    docker:
-      - image: circleci/node:13.8.0
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Save Hello world to output.txt file"
-          command: |
-             echo "Hello world" > ~/output.txt
-      - persist_to_workspace:
-              root: ~/
-              paths:
-                - output.txt
-  print_output_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: "Print the contents of the output.txt file"
-          command: cat ~/output.txt
+  # print_world:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   # Add steps to the job
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: "Say world"
+  #         command: |
+  #            echo world
+  # print_my_name:
+  #   docker:
+  #     - image: cimg/base:2020.01
+  #   steps:
+  #     - checkout
+  #     - run: 
+  #         name: "Print my env var name"
+  #         command: |
+  #            echo $MY_NAME_VAR
+
+  # save_hello_world_output:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   # Add steps to the job
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: "Save Hello world to output.txt file"
+  #         command: |
+  #            echo "Hello world" > ~/output.txt
+  #     - persist_to_workspace:
+  #             root: ~/
+  #             paths:
+  #               - output.txt
+  # print_output_file:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: "Print the contents of the output.txt file"
+  #         command: cat ~/output.txt
   
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
    version: 2
-   print-output-of-file:
+   the_jobs_to_do:
       jobs:
         - print_hello
-        - print_world:
-            requires:
-              - print_hello
-        - print_my_name
-        - save_hello_world_output
-        - print_output_file:
-            requires:
-              - save_hello_world_output
-
+        # - print_world:
+        #     requires:
+        #       - print_hello
+        # - print_my_name
+        # - save_hello_world_output
+        # - print_output_file:
+        #     requires:
+        #       - save_hello_world_output
