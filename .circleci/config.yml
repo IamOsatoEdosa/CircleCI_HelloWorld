@@ -1,15 +1,15 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-commands:
-  print_pipeline_id:
-    description: prints the id of the pipeline
-    parameters:
-      to:
-        type: string
-    steps:
-      - checkout
-      - run: echo "<<parameters.to>>"
+# commands:
+#   print_pipeline_id:
+#     description: prints the id of the pipeline
+#     parameters:
+#       to:
+#         type: string
+#     steps:
+#       - checkout
+#       - run: echo "<<parameters.to>>"
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
