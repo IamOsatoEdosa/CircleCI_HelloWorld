@@ -82,8 +82,7 @@ jobs:
         - run: exit 1
         - run:
             name: runs when job experiences error
-            command: |
-                echo "The job has failed to run"
+            command: echo "The job has failed to run"
             when: on_fail
 
   
